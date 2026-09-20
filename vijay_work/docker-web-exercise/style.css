@@ -1,0 +1,112 @@
+/* Base Styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #1a1f2e 0%, #2d3446 50%, #1a1f2e 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #e8efff;
+}
+
+/* Container */
+.container {
+    text-align: center;
+    max-width: 500px;
+    padding: 2rem;
+}
+
+/* Heading */
+h1 {
+    font-size: 2.2rem;
+    margin-bottom: 0.8rem;
+    background: linear-gradient(90deg, #6dd5ed 0%, #3bc9aa 50%, #6dd5ed 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 700;
+}
+
+/* Description */
+p {
+    color: #aab2cf;
+    margin-bottom: 2.5rem;
+    line-height: 1.6;
+    font-size: 1.05rem;
+}
+
+/* Card Styles */
+.card {
+    background: linear-gradient(180deg, #141a27 0%, #0f131b 50%, #141a27 100%);
+    border-radius: 16px;
+    padding: 2rem;
+    border: 1px solid rgba(109, 213, 237, 0.1);
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.3),
+        0 0 40px rgba(109, 213, 237, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 
+        0 12px 48px rgba(0, 0, 0, 0.4),
+        0 0 60px rgba(109, 213, 237, 0.15);
+}
+
+.card-title {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #4a5f8c;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.card-content {
+    min-height: 75px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #aab2cf;
+    margin-bottom: 1.5rem;
+}
+
+/* Button Styles */
+.btn-primary {
+    background: linear-gradient(90deg, #6dd5ed 0%, #3bc9aa 100%);
+    color: #0f1824;
+    border: none;
+    padding: 0.9rem 2rem;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-primary:hover {
+    transform: scale(1.05);
+    box-shadow: 
+        0 4px 20px rgba(109, 213, 237, 0.4),
+        0 0 30px rgba(109, 213, 237, 0.2);
+}
+
+.btn-primary:active {
+    transform: scale(0.95);
+}
+
+/* Footer */
+footer {
+    margin-top: 2rem;
+    color: #4a5f8c;
+    font-size: 0.85rem;
+}
