@@ -1,0 +1,76 @@
+name: Dashboard
+
+# Scoped to the Task 2 dashboard (public/ + the dev harness it is tested
+# against). The project-wide pipeline lives in .github/workflows/ci.yml
+# (Task 3); this workflow only guards the dashboard.
+on:
+  pull_request:
+    paths:
+      - 'public/**'
+      - 'dev/**'
+      - '.github/workflows/dashboard.yml'
+  push:
+    branches: ['**']
+    paths:
+      - 'public/**'
+      - 'dev/**'
+      - '.github/workflows/dashboard.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Contract + dashboard tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+
+      - name: Run the test suite
+        run: node --test dev/*.test.cjs
+
+  docker:
+    name: Build image and smoke test it
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Build the image
+        run: docker build -f dev/Dockerfile.stub -t monitor-stub:${{ github.sha }} .
+
+      - name: Start the container
+        run: docker run -d --name api -p 3000:3000 monitor-stub:${{ github.sha }}
+
+      - name: Wait for /health
+        run: |
+          for i in $(seq 1 15); do
+            if curl -sf http://localhost:3000/health; then
+              echo ""
+              echo "health check passed"
+              exit 0
+            fi
+            echo "attempt $i: not up yet"
+            sleep 1
+          done
+          echo "health check never passed"
+          docker logs api
+          exit 1
+
+      - name: Smoke test /api/status
+        run: |
+          curl -sf http://localhost:3000/api/status > status.json
+          cat status.json
+          grep -q '"services"' status.json
+
+      - name: Smoke test POST /api/check
+        run: |
+          curl -sf -X POST http://localhost:3000/api/check > check.json
+          grep -q '"services"' check.json
+
+      - name: Container logs
+        if: always()
+        run: docker logs api

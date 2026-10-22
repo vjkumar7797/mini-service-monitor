@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Optional: hardcode the API base URL here instead of using the settings
+       field in the page. Leave empty for "same origin as this page". -->
+  <meta name="api-base-url" content="">
+  <title>Service Status</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <div>
+        <h1>Service Status</h1>
+        <p class="subtitle">Live health of the monitored services</p>
+      </div>
+      <button id="check-now" class="btn-primary" type="button">Check Now</button>
+    </header>
+
+    <!-- Shown when the API itself cannot be reached -->
+    <div id="banner" class="banner" role="alert" hidden>
+      <span class="banner-icon" aria-hidden="true">!</span>
+      <div class="banner-body">
+        <strong>Backend unreachable</strong>
+        <span id="banner-detail" class="banner-detail"></span>
+      </div>
+    </div>
+
+    <section class="toolbar">
+      <label for="api-base-url">API base URL</label>
+      <input id="api-base-url" type="text" placeholder="empty = same origin (e.g. /api)" spellcheck="false">
+      <button id="apply-api-url" class="btn-secondary" type="button">Apply</button>
+      <span class="hint" id="api-base-hint"></span>
+    </section>
+
+    <section class="card">
+      <div class="card-head">
+        <span class="card-title">Services</span>
+        <span id="summary" class="summary"></span>
+      </div>
+
+      <div class="table-wrap">
+        <table id="status-table">
+          <thead>
+            <tr>
+              <th scope="col">Service</th>
+              <th scope="col">Status</th>
+              <th scope="col">HTTP code</th>
+              <th scope="col">Response time</th>
+              <th scope="col">Last checked</th>
+            </tr>
+          </thead>
+          <tbody id="status-body">
+            <tr class="placeholder"><td colspan="5">Loading status&hellip;</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <footer>
+      <span id="footer-updated"></span>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
